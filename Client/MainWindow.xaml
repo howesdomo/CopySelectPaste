@@ -8,6 +8,7 @@
     Title="Copy Select Paste"
     Width="800"
     Height="450"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -96,6 +97,7 @@
             Grid.Row="1"
             AcceptsReturn="True"
             AcceptsTab="True"
+            FontFamily="Inconsolata"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Auto" />
 
@@ -115,30 +117,132 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto" />
             </TabItem>
             <TabItem
-                Name="tab1"
+                Name="tab_SQL_0"
                 Header="(SQL)IN 条件">
                 <TextBox
-                    x:Name="txtOutput1"
+                    x:Name="txtOutput_SQL_0"
                     AcceptsReturn="True"
                     IsReadOnly="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" />
             </TabItem>
             <TabItem
-                Name="tab2"
+                Name="tab_SQL_1"
                 Header="(SQL)插入临时表">
                 <TextBox
-                    x:Name="txtOutput2"
+                    x:Name="txtOutput_SQL_1"
                     AcceptsReturn="True"
                     IsReadOnly="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" />
             </TabItem>
             <TabItem
-                Name="tab3"
+                Name="tab_SQL_2"
+                Header="(SQL)insert语句">
+                <Grid>
+                    <TextBox
+                        x:Name="txtOutput_SQL_2"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    <StackPanel
+                        Width="150"
+                        Height="32"
+                        Margin="0,0,18,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Background="Silver">
+                        <TextBox
+                            x:Name="txtOutput_SQL_2_Arg1"
+                            Text="@tmp" />
+
+                        <TextBox x:Name="txtOutput_SQL_2_Arg2">
+                            <TextBox.Resources>
+                                <VisualBrush
+                                    x:Key="txtOutput_SQL_2_Arg2_Placeholder"
+                                    AlignmentX="Left"
+                                    Stretch="None"
+                                    TileMode="None">
+                                    <VisualBrush.Visual>
+                                        <TextBlock
+                                            FontStyle="Italic"
+                                            Foreground="Red"
+                                            Text="不加引号Index(用逗号分隔)" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </TextBox.Resources>
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Style.Triggers>
+                                        <Trigger Property="Text" Value="{x:Null}">
+                                            <Setter Property="Background" Value="{StaticResource txtOutput_SQL_2_Arg2_Placeholder}" />
+                                        </Trigger>
+                                        <Trigger Property="Text" Value="">
+                                            <Setter Property="Background" Value="{StaticResource txtOutput_SQL_2_Arg2_Placeholder}" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem
+                Name="tab_CSharp_0"
                 Header="(C#)插入String">
                 <TextBox
-                    x:Name="txtOutput3"
+                    x:Name="txtOutput_CSharp_0"
+                    AcceptsReturn="True"
+                    IsReadOnly="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </TabItem>
+            <TabItem
+                Name="tab_CSharp_1"
+                Header="(C#)crDataTable">
+                <Grid>
+                    <TextBox
+                        x:Name="txtOutput_CSharp_1"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                    <TextBox
+                        x:Name="txtOutput_CSharp_1_Arg"
+                        Width="100"
+                        Height="20"
+                        Margin="0,0,18,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Text="XModel" />
+                </Grid>
+            </TabItem>
+            <TabItem
+                Name="tab_CSharp_2"
+                Header="(C#)rDataTable">
+                <TextBox
+                    x:Name="txtOutput_CSharp_2"
+                    AcceptsReturn="True"
+                    IsReadOnly="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </TabItem>
+            <TabItem
+                Name="tab_CSharp_3"
+                Header="(C#)rDataTable定制">
+                <TextBox
+                    x:Name="txtOutput_CSharp_3"
+                    AcceptsReturn="True"
+                    IsReadOnly="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </TabItem>
+            <TabItem
+                Name="tab_CSharp_4"
+                Header="(C#)CopyModel">
+                <TextBox
+                    x:Name="txtOutput_CSharp_4"
                     AcceptsReturn="True"
                     IsReadOnly="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"

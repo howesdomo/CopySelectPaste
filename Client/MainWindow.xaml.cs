@@ -47,7 +47,9 @@ namespace Client
             txtOutput_CSharp_2.FontFamily = fontFamily_Fira_Code;
             txtOutput_CSharp_3.FontFamily = fontFamily_Fira_Code;
             txtOutput_CSharp_4.FontFamily = fontFamily_Fira_Code;
-
+            txtOutput_CSharp_5.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_5_Arg.FontFamily = fontFamily_Fira_Code;
+            txtOutput_CSharp_6.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_6_Arg1.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_6_Arg2.FontFamily = fontFamily_Fira_Code;
+            txtOutput_CSharp_7.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_7_Arg1.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_7_Arg2.FontFamily = fontFamily_Fira_Code;
             #endregion
         }
 
@@ -56,8 +58,10 @@ namespace Client
             // 输入参数
             this.txtInput.TextChanged += txtInput_TextChanged;
             this.txtOutput_CSharp_1_Arg.TextChanged += txtInput_TextChanged;
-            this.txtOutput_SQL_2_Arg1.TextChanged += txtInput_TextChanged;
-            this.txtOutput_SQL_2_Arg2.TextChanged += txtInput_TextChanged;
+            this.txtOutput_SQL_2_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_SQL_2_Arg2.TextChanged += txtInput_TextChanged;
+            this.txtOutput_CSharp_5_Arg.TextChanged += txtInput_TextChanged;
+            this.txtOutput_CSharp_6_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_CSharp_6_Arg2.TextChanged += txtInput_TextChanged;
+            this.txtOutput_CSharp_7_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_CSharp_7_Arg2.TextChanged += txtInput_TextChanged;
 
             // CheckBox
             this.cbTabNewLine.Click += checkBox_Click;
@@ -86,21 +90,32 @@ namespace Client
             tab_CSharp_2.MouseDoubleClick += tabX_MouseDoubleClick;
             tab_CSharp_3.MouseDoubleClick += tabX_MouseDoubleClick;
             tab_CSharp_4.MouseDoubleClick += tabX_MouseDoubleClick;
+            tab_CSharp_5.MouseDoubleClick += tabX_MouseDoubleClick;
+            tab_CSharp_6.MouseDoubleClick += tabX_MouseDoubleClick;
+            tab_CSharp_7.MouseDoubleClick += tabX_MouseDoubleClick;
         }
 
         private void tabX_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (sender is TabItem)
             {
-                copyToClipboard((sender as TabItem).Content);
+                if ((sender as TabItem).Content is TextBox)
+                {
+                    copyToClipboard((sender as TabItem).Content);
+                }
+                else if ((sender as TabItem).Content is Grid)
+                {
+                    Grid grid = (sender as TabItem).Content as Grid;
+                    copyToClipboard(grid.Children[0]);
+                }
             }
         }
 
-        private void copyToClipboard(object sender)
+        private void copyToClipboard(object o)
         {
-            if (sender is TextBox)
+            if (o is TextBox)
             {
-                Clipboard.SetText((sender as TextBox).Text);
+                Clipboard.SetText((o as TextBox).Text);
             }
         }
 
@@ -145,12 +160,13 @@ namespace Client
                 this.txtOutput_CSharp_2.Text = string.Empty;
                 this.txtOutput_CSharp_3.Text = string.Empty;
                 this.txtOutput_CSharp_4.Text = string.Empty;
+                this.txtOutput_CSharp_5.Text = string.Empty;
                 return;
             }
 
             StringBuilder sbInfo = new StringBuilder();
             var matchNewLineSymbol = System.Text.RegularExpressions.Regex.Matches(text, "[\r]?\n");
-            sbInfo.Append($"源文件共 {matchNewLineSymbol.Count + 1} 行; ");
+            sbInfo.Append($"源文件 - 共 {matchNewLineSymbol.Count + 1} 行; ");
 
             var query = text.Split('\r', '\n').AsQueryable<string>();
             if (cbTabNewLine.IsChecked.Value)
@@ -204,7 +220,7 @@ namespace Client
 
             var list = query.ToList();
             this.txtInputInfo.Text = sbInfo.ToString();
-            this.txtOutputInfo.Text = $"共 {list.Count} 项";
+            this.txtOutputInfo.Text = $"结果 - 共 {list.Count} 项";
 
 
             this.txtOutput0.Text = calc(list);
@@ -216,6 +232,9 @@ namespace Client
             this.txtOutput_CSharp_2.Text = CSharp_rDataTable(list);
             this.txtOutput_CSharp_3.Text = CSharp_rDataTableHowe(list);
             this.txtOutput_CSharp_4.Text = CSharp_CopyModel(list);
+            this.txtOutput_CSharp_5.Text = CSharp_SqlParameter(list);
+            this.txtOutput_CSharp_6.Text = CSharp_NewModelList(list);
+            this.txtOutput_CSharp_7.Text = CSharp_NewModelListHowe(list);
         }
 
         private string calc(List<string> l)
@@ -452,41 +471,23 @@ namespace Client
             return sb.ToString();
         }
 
-        private string CSharp_DBReader(List<string> l)
+        private string CSharp_SqlParameter(List<string> l)
         {
-            string tabSymbol = "\t";
+            string argsName = this.txtOutput_CSharp_5_Arg.Text;
+            if (argsName.IsNullOrWhiteSpace())
+            {
+                argsName = "searchArgs";
+            }
 
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"public System.Data.DataTable CreateDataTable_X()");
-            sb.AppendLine("{");
-
-            sb.Append(tabSymbol).AppendLine("System.Data.DataTable dt = new System.Data.DataTable();");
+            sb.AppendLine($"var paramList = new List<System.Data.SqlClient.SqlParameter>();");
 
             foreach (var item in l)
             {
-                sb.Append(tabSymbol).AppendLine("dt.Columns.Add(\"" + item + "\");");
+                sb.AppendLine($"new System.Data.SqlClient.SqlParameter(\"@{item}\", {argsName}.{item}));");
             }
 
-            sb.Append(tabSymbol).AppendLine("return dt;");
-            sb.AppendLine("}");
-
-            sb.AppendLine("public System.Data.DataTable GetDataTable(IEnumerable<XModel> l)");
-            sb.AppendLine("{");
-
-            sb.Append(tabSymbol).AppendLine("var dt = CreateDataTable_X();");
-            sb.Append(tabSymbol).AppendLine("foreach (var item in l)");
-            sb.Append(tabSymbol).AppendLine("{");
-            sb.Append(tabSymbol).Append(tabSymbol).AppendLine("DataRow dr = dt.NewRow();");
-            sb.Append(tabSymbol).Append(tabSymbol).AppendLine("dt.Rows.Add(dr);");
-
-            foreach (var item in l)
-            {
-                sb.Append(tabSymbol).Append(tabSymbol).AppendLine($"dr[\"{item}\"] = item.{item};");
-            }
-
-            sb.Append(tabSymbol).AppendLine("return dt;");
-            sb.Append(tabSymbol).AppendLine("}");
             sb.AppendLine("}");
 
             return sb.ToString();
@@ -507,6 +508,188 @@ namespace Client
             }
 
             sb.AppendLine("}");
+
+            return sb.ToString();
+        }
+
+        private string CSharp_NewModelList(List<string> l)
+        {
+            string className = this.txtOutput_CSharp_6_Arg1.Text;
+            if (className.IsNullOrWhiteSpace())
+            {
+                className = "XMdoel";
+            }
+
+            IEnumerable<string> m = this.txtOutput_CSharp_6_Arg2.Text.Split(',', ' ', '\t').Where(i => i.IsNullOrWhiteSpace() == false);
+            List<int> ignoreIndexList = new List<int>();
+            foreach (var item in m)
+            {
+                if (int.TryParse(item, out int i))
+                {
+                    ignoreIndexList.Add(i);
+                }
+            }
+
+            var propNameList = l[0].Split('\t').Select(i => i.Trim()).Where(i => i.IsNullOrWhiteSpace() == false).ToList();
+
+            if (l.Count <= 1)
+            {
+                return "不满足转换要求: 至少需要两行数据";
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int rowIndex = 1; rowIndex < l.Count; rowIndex++)
+            {
+                sb.Append("l.Add(new ").Append(className).Append("() { ");
+
+                List<string> valuesList = l[rowIndex].Split('\t').Select(i => i.Trim()).Where(i => i.IsNullOrWhiteSpace() == false).ToList();
+
+                if (propNameList.Count < valuesList.Count)
+                {
+                    return "不满足转换要求: propList.Count < valueList.Count"; ;
+                }
+
+                for (int columnIndex = 0; columnIndex < valuesList.Count; columnIndex++)
+                {
+                    string item = valuesList[columnIndex];
+
+                    if (item.Equals("null", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        sb.Append($"{propNameList[columnIndex]} = {valuesList[columnIndex]}");
+                    }
+                    else if (ignoreIndexList.Any(j => j == columnIndex)) // 忽略用户手输的
+                    {
+                        sb.Append($"{propNameList[columnIndex]} = {valuesList[columnIndex]}");
+                    }
+                    else
+                    {
+                        sb.Append($"{propNameList[columnIndex]} = \"{valuesList[columnIndex]}\"");
+                    }                    
+
+                    if (columnIndex + 1 < propNameList.Count)
+                    {
+                        sb.Append(", ");
+                    }
+                }
+
+                if (rowIndex + 1 < l.Count)
+                {
+                    sb.AppendLine(" });");
+                }
+                else
+                {
+                    sb.Append(" });");
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        private string CSharp_NewModelListHowe(List<string> l)
+        {
+            string className = this.txtOutput_CSharp_7_Arg1.Text;
+            if (className.IsNullOrWhiteSpace())
+            {
+                className = "XMdoel";
+            }
+
+            IEnumerable<string> m = this.txtOutput_CSharp_7_Arg2.Text.Split(',', ' ', '\t').Where(i => i.IsNullOrWhiteSpace() == false);
+            List<int> ignoreIndexList = new List<int>();
+            foreach (var item in m)
+            {
+                if (int.TryParse(item, out int i))
+                {
+                    ignoreIndexList.Add(i);
+                }
+            }
+
+            var propNameList = l[0].Split('\t').Select(i => i.Trim()).Where(i => i.IsNullOrWhiteSpace() == false).ToList();
+
+            if (l.Count <= 1)
+            {
+                return "不满足转换要求: 至少需要两行数据";
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int rowIndex = 1; rowIndex < l.Count; rowIndex++)
+            {
+                sb.Append("l.Add(new ").Append(className).Append("() { ");
+
+                List<string> valuesList = l[rowIndex].Split('\t').Select(i => i.Trim()).Where(i => i.IsNullOrWhiteSpace() == false).ToList();
+
+                if (propNameList.Count < valuesList.Count)
+                {
+                    return "不满足转换要求: propList.Count < valueList.Count"; ;
+                }
+
+                for (int columnIndex = 0; columnIndex < valuesList.Count; columnIndex++)
+                {
+                    string item = valuesList[columnIndex];
+
+                    if (item.Equals("null", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        sb.Append($"{propNameList[columnIndex]} = null");
+                    }
+                    else if (ignoreIndexList.Any(j => j == columnIndex)) // 忽略用户手输的
+                    {
+                        sb.Append($"{propNameList[columnIndex]} = {valuesList[columnIndex]}");
+                    }
+                    else
+                    {
+                        string columnName = propNameList[columnIndex];
+
+                        if (columnName.Equals("ID", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = Guid.Parse(\"{valuesList[columnIndex]}\")");
+                        }
+                        else if (columnName.EndsWith("OrderID", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = Guid.Parse(\"{valuesList[columnIndex]}\")");
+                        }
+                        else if (columnName.EndsWith("OrderItemID", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = Guid.Parse(\"{valuesList[columnIndex]}\")");
+                        }
+                        else if (columnName.EndsWith("Time", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = DateTime.Parse(\"{valuesList[columnIndex]}\")");
+                        }
+                        else if (columnName.EndsWith("Date", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = DateTime.Parse(\"{valuesList[columnIndex]}\")");
+                        }
+                        else if (columnName.EndsWith("Qty", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = Decimal.Parse(\"{valuesList[columnIndex]}\")");
+                        }
+                        else if (columnName.EndsWith("SNP", StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = Decimal.Parse(\"{valuesList[columnIndex]}\")");
+                        }
+                        else
+                        {
+                            sb.Append($"{propNameList[columnIndex]} = \"{valuesList[columnIndex]}\"");
+                        }
+                    }
+
+                    if (columnIndex + 1 < propNameList.Count)
+                    {
+                        sb.Append(", ");
+                    }
+                }
+
+                if (rowIndex + 1 < l.Count)
+                {
+                    sb.AppendLine(" });");
+                }
+                else 
+                {
+                    sb.Append(" });");
+                }
+                
+            }
 
             return sb.ToString();
         }

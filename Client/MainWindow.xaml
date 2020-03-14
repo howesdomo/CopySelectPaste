@@ -12,246 +12,404 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel
+
+        <Grid
             Grid.Row="0"
-            Orientation="Horizontal">
+            MinHeight="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                Grid.Row="0"
+                Orientation="Horizontal">
 
-            <CheckBox
-                x:Name="cbTabNewLine"
-                Margin="5,0,5,0"
-                VerticalAlignment="Center"
-                Content="Tab换行" />
+                <CheckBox
+                    x:Name="cbTabNewLine"
+                    Margin="5,0,5,0"
+                    VerticalAlignment="Center"
+                    Content="Tab换行" />
 
-            <GroupBox
-                Margin="5,0,5,0"
-                Header="除空行">
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton
-                        x:Name="rbNotRemove"
-                        Margin="5,0,5,0"
-                        Content="无"
-                        GroupName="RemoveNullOrWhiteSpaceLine" />
-                    <RadioButton
-                        x:Name="rbRemoveNullLine"
-                        Margin="5,0,5,0"
-                        Content="除空行"
-                        GroupName="RemoveNullOrWhiteSpaceLine"
-                        IsChecked="True" />
-                    <RadioButton
-                        x:Name="rbRemoveWhiteSpace"
-                        Margin="5,0,5,0"
-                        Content="除空格行"
-                        GroupName="RemoveNullOrWhiteSpaceLine" />
-                </StackPanel>
-            </GroupBox>
-
-            <GroupBox
-                Margin="5,0,5,0"
-                Header="除空格">
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton
-                        Name="rbTrim"
-                        Margin="5,0,5,0"
-                        Content="Trim"
-                        GroupName="Trim"
-                        IsChecked="True" />
-                    <RadioButton
-                        Name="rbNotTrim"
-                        Margin="5,0,5,0"
-                        Content="No"
-                        GroupName="Trim" />
-                    <RadioButton
-                        Name="rbTrimStart"
-                        Margin="5,0,5,0"
-                        Content="TrimStart"
-                        GroupName="Trim" />
-                    <RadioButton
-                        Name="rbTrimEnd"
-                        Margin="5,0,5,0"
-                        Content="TrimEnd"
-                        GroupName="Trim" />
-                    <RadioButton
-                        Name="rbTrimAdv"
-                        Margin="5,0,5,0"
-                        Content="TrimAdv"
-                        GroupName="Trim" />
-                </StackPanel>
-            </GroupBox>
-
-            <CheckBox
-                x:Name="cbDistinct"
-                Margin="5,0,5,0"
-                VerticalAlignment="Center"
-                Content="除重复" />
-
-        </StackPanel>
-
-        <TextBox
-            x:Name="txtInput"
-            Grid.Row="1"
-            AcceptsReturn="True"
-            AcceptsTab="True"
-            FontFamily="Inconsolata"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            ScrollViewer.VerticalScrollBarVisibility="Auto" />
-
-        <TextBlock
-            x:Name="txtInputInfo"
-            Grid.Row="2" />
-
-        <TabControl Grid.Row="3">
-            <TabItem
-                Name="tab0"
-                Header="结果">
-                <TextBox
-                    x:Name="txtOutput0"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
-            </TabItem>
-            <TabItem
-                Name="tab_SQL_0"
-                Header="(SQL)IN 条件">
-                <TextBox
-                    x:Name="txtOutput_SQL_0"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
-            </TabItem>
-            <TabItem
-                Name="tab_SQL_1"
-                Header="(SQL)插入临时表">
-                <TextBox
-                    x:Name="txtOutput_SQL_1"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
-            </TabItem>
-            <TabItem
-                Name="tab_SQL_2"
-                Header="(SQL)insert语句">
-                <Grid>
-                    <TextBox
-                        x:Name="txtOutput_SQL_2"
-                        AcceptsReturn="True"
-                        IsReadOnly="True"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                    <StackPanel
-                        Width="150"
-                        Height="32"
-                        Margin="0,0,18,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Background="Silver">
-                        <TextBox
-                            x:Name="txtOutput_SQL_2_Arg1"
-                            Text="@tmp" />
-
-                        <TextBox x:Name="txtOutput_SQL_2_Arg2">
-                            <TextBox.Resources>
-                                <VisualBrush
-                                    x:Key="txtOutput_SQL_2_Arg2_Placeholder"
-                                    AlignmentX="Left"
-                                    Stretch="None"
-                                    TileMode="None">
-                                    <VisualBrush.Visual>
-                                        <TextBlock
-                                            FontStyle="Italic"
-                                            Foreground="Red"
-                                            Text="不加引号Index(用逗号分隔)" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </TextBox.Resources>
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Style.Triggers>
-                                        <Trigger Property="Text" Value="{x:Null}">
-                                            <Setter Property="Background" Value="{StaticResource txtOutput_SQL_2_Arg2_Placeholder}" />
-                                        </Trigger>
-                                        <Trigger Property="Text" Value="">
-                                            <Setter Property="Background" Value="{StaticResource txtOutput_SQL_2_Arg2_Placeholder}" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
+                <GroupBox
+                    Margin="5,0,5,0"
+                    Header="除空行">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton
+                            x:Name="rbNotRemove"
+                            Margin="5,0,5,0"
+                            Content="无"
+                            GroupName="RemoveNullOrWhiteSpaceLine" />
+                        <RadioButton
+                            x:Name="rbRemoveNullLine"
+                            Margin="5,0,5,0"
+                            Content="除空行"
+                            GroupName="RemoveNullOrWhiteSpaceLine"
+                            IsChecked="True" />
+                        <RadioButton
+                            x:Name="rbRemoveWhiteSpace"
+                            Margin="5,0,5,0"
+                            Content="除空格行"
+                            GroupName="RemoveNullOrWhiteSpaceLine" />
                     </StackPanel>
-                </Grid>
-            </TabItem>
-            <TabItem
-                Name="tab_CSharp_0"
-                Header="(C#)插入String">
-                <TextBox
-                    x:Name="txtOutput_CSharp_0"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
-            </TabItem>
-            <TabItem
-                Name="tab_CSharp_1"
-                Header="(C#)crDataTable">
-                <Grid>
-                    <TextBox
-                        x:Name="txtOutput_CSharp_1"
-                        AcceptsReturn="True"
-                        IsReadOnly="True"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                    <TextBox
-                        x:Name="txtOutput_CSharp_1_Arg"
-                        Width="100"
-                        Height="20"
-                        Margin="0,0,18,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Text="XModel" />
-                </Grid>
-            </TabItem>
-            <TabItem
-                Name="tab_CSharp_2"
-                Header="(C#)rDataTable">
-                <TextBox
-                    x:Name="txtOutput_CSharp_2"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
-            </TabItem>
-            <TabItem
-                Name="tab_CSharp_3"
-                Header="(C#)rDataTable定制">
-                <TextBox
-                    x:Name="txtOutput_CSharp_3"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
-            </TabItem>
-            <TabItem
-                Name="tab_CSharp_4"
-                Header="(C#)CopyModel">
-                <TextBox
-                    x:Name="txtOutput_CSharp_4"
-                    AcceptsReturn="True"
-                    IsReadOnly="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
-            </TabItem>
-        </TabControl>
+                </GroupBox>
+
+                <GroupBox
+                    Margin="5,0,5,0"
+                    Header="除空格">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton
+                            Name="rbTrim"
+                            Margin="5,0,5,0"
+                            Content="Trim"
+                            GroupName="Trim"
+                            IsChecked="True" />
+                        <RadioButton
+                            Name="rbNotTrim"
+                            Margin="5,0,5,0"
+                            Content="No"
+                            GroupName="Trim" />
+                        <RadioButton
+                            Name="rbTrimStart"
+                            Margin="5,0,5,0"
+                            Content="TrimStart"
+                            GroupName="Trim" />
+                        <RadioButton
+                            Name="rbTrimEnd"
+                            Margin="5,0,5,0"
+                            Content="TrimEnd"
+                            GroupName="Trim" />
+                        <RadioButton
+                            Name="rbTrimAdv"
+                            Margin="5,0,5,0"
+                            Content="TrimAdv"
+                            GroupName="Trim" />
+                    </StackPanel>
+                </GroupBox>
+
+                <CheckBox
+                    x:Name="cbDistinct"
+                    Margin="5,0,5,0"
+                    VerticalAlignment="Center"
+                    Content="除重复" />
+
+            </StackPanel>
+
+            <TextBox
+                x:Name="txtInput"
+                Grid.Row="1"
+                AcceptsReturn="True"
+                AcceptsTab="True"
+                FontFamily="Inconsolata"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+            <TextBlock
+                x:Name="txtInputInfo"
+                Grid.Row="2" />
+        </Grid>
 
         <TextBlock
-            x:Name="txtOutputInfo"
-            Grid.Row="4" />
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Text="..." />
+        <GridSplitter
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            Opacity="0.1" />
+
+
+        <Grid
+            Grid.Row="2"
+            MinHeight="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TabControl Grid.Row="0">
+                <TabItem
+                    Name="tab0"
+                    Header="结果">
+                    <TextBox
+                        x:Name="txtOutput0"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem
+                    Name="tab_SQL_0"
+                    Header="(SQL)IN 条件">
+                    <TextBox
+                        x:Name="txtOutput_SQL_0"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem
+                    Name="tab_SQL_1"
+                    Header="(SQL)插入临时表">
+                    <TextBox
+                        x:Name="txtOutput_SQL_1"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem
+                    Name="tab_SQL_2"
+                    Header="(SQL)insert语句">
+                    <Grid>
+                        <TextBox
+                            x:Name="txtOutput_SQL_2"
+                            AcceptsReturn="True"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                        <StackPanel
+                            Width="150"
+                            Height="32"
+                            Margin="0,0,18,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Silver">
+                            <TextBox
+                                x:Name="txtOutput_SQL_2_Arg1"
+                                Text="@tmp" />
+
+                            <TextBox x:Name="txtOutput_SQL_2_Arg2">
+                                <TextBox.Resources>
+                                    <VisualBrush
+                                        x:Key="txtOutput_SQL_2_Arg2_Placeholder"
+                                        AlignmentX="Left"
+                                        Stretch="None"
+                                        TileMode="None">
+                                        <VisualBrush.Visual>
+                                            <TextBlock
+                                                FontStyle="Italic"
+                                                Foreground="Red"
+                                                Text="不加引号Index(用逗号分隔)" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </TextBox.Resources>
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_SQL_2_Arg2_Placeholder}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_SQL_2_Arg2_Placeholder}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem
+                    Name="tab_CSharp_0"
+                    Header="(C#)插入String">
+                    <TextBox
+                        x:Name="txtOutput_CSharp_0"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem
+                    Name="tab_CSharp_1"
+                    Header="(C#)crDataTable">
+                    <Grid>
+                        <TextBox
+                            x:Name="txtOutput_CSharp_1"
+                            AcceptsReturn="True"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                        <TextBox
+                            x:Name="txtOutput_CSharp_1_Arg"
+                            Width="100"
+                            Height="20"
+                            Margin="0,0,18,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Text="XModel" />
+                    </Grid>
+                </TabItem>
+                <TabItem
+                    Name="tab_CSharp_2"
+                    Header="(C#)rDataTable">
+                    <TextBox
+                        x:Name="txtOutput_CSharp_2"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem
+                    Name="tab_CSharp_3"
+                    Header="(C#)rDataTable定制">
+                    <TextBox
+                        x:Name="txtOutput_CSharp_3"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem
+                    Name="tab_CSharp_4"
+                    Header="(C#)CopyModel">
+                    <TextBox
+                        x:Name="txtOutput_CSharp_4"
+                        AcceptsReturn="True"
+                        IsReadOnly="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                </TabItem>
+                <TabItem
+                    Name="tab_CSharp_5"
+                    Header="(C#)SqlParameter">
+                    <Grid>
+                        <TextBox
+                            x:Name="txtOutput_CSharp_5"
+                            AcceptsReturn="True"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+                        <TextBox
+                            x:Name="txtOutput_CSharp_5_Arg"
+                            Width="100"
+                            Height="20"
+                            Margin="0,0,18,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Text="searchArgs" />
+                    </Grid>
+                </TabItem>
+                <TabItem
+                    Name="tab_CSharp_6"
+                    Header="(C#)NewModelList">
+                    <Grid>
+
+                        <TextBox
+                            x:Name="txtOutput_CSharp_6"
+                            AcceptsReturn="True"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+                        <StackPanel
+                            Width="150"
+                            Height="32"
+                            Margin="0,0,18,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Silver">
+                            <TextBox
+                                x:Name="txtOutput_CSharp_6_Arg1"
+                                Text="XModel" />
+
+                            <TextBox x:Name="txtOutput_CSharp_6_Arg2">
+                                <TextBox.Resources>
+                                    <VisualBrush
+                                        x:Key="txtOutput_CSharp_6_Arg2_Placeholder"
+                                        AlignmentX="Left"
+                                        Stretch="None"
+                                        TileMode="None">
+                                        <VisualBrush.Visual>
+                                            <TextBlock
+                                                FontStyle="Italic"
+                                                Foreground="Red"
+                                                Text="不加引号Index(用逗号分隔)" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </TextBox.Resources>
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_6_Arg2_Placeholder}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_6_Arg2_Placeholder}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem
+                    Name="tab_CSharp_7"
+                    Header="(C#)NewModelList定制">
+                    <Grid>
+
+                        <TextBox
+                            x:Name="txtOutput_CSharp_7"
+                            AcceptsReturn="True"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+                        <StackPanel
+                            Width="150"
+                            Height="32"
+                            Margin="0,0,18,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Silver">
+                            <TextBox
+                                x:Name="txtOutput_CSharp_7_Arg1"
+                                Text="XModel" />
+
+                            <TextBox x:Name="txtOutput_CSharp_7_Arg2">
+                                <TextBox.Resources>
+                                    <VisualBrush
+                                        x:Key="txtOutput_CSharp_7_Placeholder"
+                                        AlignmentX="Left"
+                                        Stretch="None"
+                                        TileMode="None">
+                                        <VisualBrush.Visual>
+                                            <TextBlock
+                                                FontStyle="Italic"
+                                                Foreground="Red"
+                                                Text="不加引号Index(用逗号分隔)" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </TextBox.Resources>
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+            <TextBlock
+                x:Name="txtOutputInfo"
+                Grid.Row="1" />
+        </Grid>
     </Grid>
 </Window>

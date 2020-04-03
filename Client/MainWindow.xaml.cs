@@ -62,6 +62,7 @@ namespace Client
             this.txtOutput_CSharp_5_Arg.TextChanged += txtInput_TextChanged;
             this.txtOutput_CSharp_6_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_CSharp_6_Arg2.TextChanged += txtInput_TextChanged;
             this.txtOutput_CSharp_7_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_CSharp_7_Arg2.TextChanged += txtInput_TextChanged;
+            this.cbOutput_CSharp_8_Arg1.Checked += radioButton_Click; this.cbOutput_CSharp_8_Arg2.Checked += radioButton_Click; this.cbOutput_CSharp_8_Arg3.Checked += radioButton_Click;
 
             // CheckBox
             this.cbTabNewLine.Click += checkBox_Click;
@@ -93,6 +94,7 @@ namespace Client
             tab_CSharp_5.MouseDoubleClick += tabX_MouseDoubleClick;
             tab_CSharp_6.MouseDoubleClick += tabX_MouseDoubleClick;
             tab_CSharp_7.MouseDoubleClick += tabX_MouseDoubleClick;
+            tab_CSharp_8.MouseDoubleClick += tabX_MouseDoubleClick;
         }
 
         private void tabX_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -161,6 +163,9 @@ namespace Client
                 this.txtOutput_CSharp_3.Text = string.Empty;
                 this.txtOutput_CSharp_4.Text = string.Empty;
                 this.txtOutput_CSharp_5.Text = string.Empty;
+                this.txtOutput_CSharp_6.Text = string.Empty;
+                this.txtOutput_CSharp_7.Text = string.Empty;
+                this.txtOutput_CSharp_8.Text = string.Empty;
                 return;
             }
 
@@ -235,6 +240,7 @@ namespace Client
             this.txtOutput_CSharp_5.Text = CSharp_SqlParameter(list);
             this.txtOutput_CSharp_6.Text = CSharp_NewModelList(list);
             this.txtOutput_CSharp_7.Text = CSharp_NewModelListHowe(list);
+            this.txtOutput_CSharp_8.Text = CSharp_ABC(list);
         }
 
         private string calc(List<string> l)
@@ -693,5 +699,34 @@ namespace Client
 
             return sb.ToString();
         }
+
+        private string CSharp_ABC(List<string> l)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string combineSymbol = string.Empty;
+            if (cbOutput_CSharp_8_Arg1.IsChecked.HasValue == true && cbOutput_CSharp_8_Arg1.IsChecked.Value == true)
+            {
+                combineSymbol = @"\";
+            }
+            else if (cbOutput_CSharp_8_Arg2.IsChecked.HasValue == true && cbOutput_CSharp_8_Arg2.IsChecked.Value == true)
+            {
+                combineSymbol = @"\\";
+            }
+            else if(cbOutput_CSharp_8_Arg3.IsChecked.HasValue == true && cbOutput_CSharp_8_Arg3.IsChecked.Value == true)
+            { 
+                combineSymbol = @"/";
+            }
+
+            foreach (var item in l)
+            {
+                var toAdd = item.Split('\\', '/').Where(i => i.IsNullOrWhiteSpace() == false).CombineString(combineSymbol);
+                sb.AppendLine(toAdd);
+            }
+
+            var r = sb.ToString();
+            return r.Substring(0, r.Length - 2); // 去掉最后的两个符号
+        }
+
     }
 }

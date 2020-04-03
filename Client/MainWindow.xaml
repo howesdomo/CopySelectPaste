@@ -115,9 +115,11 @@
 
         <TextBlock
             Grid.Row="1"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
-            Text="..." />
+            Background="Orange"
+            Text="..."
+            TextAlignment="Center" />
         <GridSplitter
             Grid.Row="1"
             HorizontalAlignment="Stretch"
@@ -402,6 +404,45 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem
+                    Name="tab_CSharp_8"
+                    Header="(C#)路径转换">
+                    <Grid>
+
+                        <TextBox
+                            x:Name="txtOutput_CSharp_8"
+                            AcceptsReturn="True"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+                        <StackPanel
+                            Width="150"
+                            Height="65"
+                            Margin="0,0,18,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Silver">
+                            <RadioButton
+                                x:Name="cbOutput_CSharp_8_Arg1"
+                                Margin="5,5,0,0"
+                                Content="Windows默认(反斜杠)"
+                                GroupName="tab_CSharp_8_args" />
+                            <RadioButton
+                                x:Name="cbOutput_CSharp_8_Arg2"
+                                Margin="5,5,0,0"
+                                Content="Windows编程(双反斜杠)"
+                                GroupName="tab_CSharp_8_args" />
+                            <RadioButton
+                                x:Name="cbOutput_CSharp_8_Arg3"
+                                Margin="5,5,0,0"
+                                Content="Linux(斜杠)"
+                                GroupName="tab_CSharp_8_args"
+                                IsChecked="True" />
                         </StackPanel>
                     </Grid>
                 </TabItem>

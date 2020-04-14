@@ -7,14 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Copy Select Paste"
     Width="800"
-    Height="450"
+    Height="600"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
             <RowDefinition Height="12" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="6*" />
         </Grid.RowDefinitions>
 
         <Grid
@@ -175,13 +175,13 @@
                             IsReadOnly="True"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
                             ScrollViewer.VerticalScrollBarVisibility="Auto" />
-                        <StackPanel
+                        <Grid
                             Width="150"
-                            Height="32"
                             Margin="0,0,18,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Background="Silver">
+                        <StackPanel>
                             <TextBox
                                 x:Name="txtOutput_SQL_2_Arg1"
                                 Text="@tmp" />
@@ -215,6 +215,7 @@
                                 </TextBox.Style>
                             </TextBox>
                         </StackPanel>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem
@@ -309,47 +310,47 @@
                             IsReadOnly="True"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
                             ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                        <Grid
+                            Width="150"                                
+                                Margin="0,0,18,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Background="Silver">
+                            <StackPanel>
+                                <TextBox
+                                    x:Name="txtOutput_CSharp_6_Arg1"
+                                    Text="XModel" />
 
-                        <StackPanel
-                            Width="150"
-                            Height="32"
-                            Margin="0,0,18,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Background="Silver">
-                            <TextBox
-                                x:Name="txtOutput_CSharp_6_Arg1"
-                                Text="XModel" />
-
-                            <TextBox x:Name="txtOutput_CSharp_6_Arg2">
-                                <TextBox.Resources>
-                                    <VisualBrush
-                                        x:Key="txtOutput_CSharp_6_Arg2_Placeholder"
-                                        AlignmentX="Left"
-                                        Stretch="None"
-                                        TileMode="None">
-                                        <VisualBrush.Visual>
-                                            <TextBlock
-                                                FontStyle="Italic"
-                                                Foreground="Red"
-                                                Text="不加引号Index(用逗号分隔)" />
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </TextBox.Resources>
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox">
-                                        <Style.Triggers>
-                                            <Trigger Property="Text" Value="{x:Null}">
-                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_6_Arg2_Placeholder}" />
-                                            </Trigger>
-                                            <Trigger Property="Text" Value="">
-                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_6_Arg2_Placeholder}" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                        </StackPanel>
+                                <TextBox x:Name="txtOutput_CSharp_6_Arg2">
+                                    <TextBox.Resources>
+                                        <VisualBrush
+                                            x:Key="txtOutput_CSharp_6_Arg2_Placeholder"
+                                            AlignmentX="Left"
+                                            Stretch="None"
+                                            TileMode="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock
+                                                    FontStyle="Italic"
+                                                    Foreground="Red"
+                                                    Text="不加引号Index(用逗号分隔)" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </TextBox.Resources>
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <Trigger Property="Text" Value="{x:Null}">
+                                                    <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_6_Arg2_Placeholder}" />
+                                                </Trigger>
+                                                <Trigger Property="Text" Value="">
+                                                    <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_6_Arg2_Placeholder}" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </TabItem>
 
@@ -364,47 +365,47 @@
                             IsReadOnly="True"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
                             ScrollViewer.VerticalScrollBarVisibility="Auto" />
+                        <Grid
+                            Width="150"                               
+                                Margin="0,0,18,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Background="Silver">
+                            <StackPanel>
+                                <TextBox
+                                    x:Name="txtOutput_CSharp_7_Arg1"
+                                    Text="XModel" />
 
-                        <StackPanel
-                            Width="150"
-                            Height="32"
-                            Margin="0,0,18,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Background="Silver">
-                            <TextBox
-                                x:Name="txtOutput_CSharp_7_Arg1"
-                                Text="XModel" />
-
-                            <TextBox x:Name="txtOutput_CSharp_7_Arg2">
-                                <TextBox.Resources>
-                                    <VisualBrush
-                                        x:Key="txtOutput_CSharp_7_Placeholder"
-                                        AlignmentX="Left"
-                                        Stretch="None"
-                                        TileMode="None">
-                                        <VisualBrush.Visual>
-                                            <TextBlock
-                                                FontStyle="Italic"
-                                                Foreground="Red"
-                                                Text="不加引号Index(用逗号分隔)" />
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </TextBox.Resources>
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox">
-                                        <Style.Triggers>
-                                            <Trigger Property="Text" Value="{x:Null}">
-                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
-                                            </Trigger>
-                                            <Trigger Property="Text" Value="">
-                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                        </StackPanel>
+                                <TextBox x:Name="txtOutput_CSharp_7_Arg2">
+                                    <TextBox.Resources>
+                                        <VisualBrush
+                                            x:Key="txtOutput_CSharp_7_Placeholder"
+                                            AlignmentX="Left"
+                                            Stretch="None"
+                                            TileMode="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock
+                                                    FontStyle="Italic"
+                                                    Foreground="Red"
+                                                    Text="不加引号Index(用逗号分隔)" />
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </TextBox.Resources>
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <Trigger Property="Text" Value="{x:Null}">
+                                                    <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
+                                                </Trigger>
+                                                <Trigger Property="Text" Value="">
+                                                    <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </TabItem>
 
@@ -419,31 +420,31 @@
                             IsReadOnly="True"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
                             ScrollViewer.VerticalScrollBarVisibility="Auto" />
-
-                        <StackPanel
+                        <Grid
                             Width="150"
-                            Height="65"
                             Margin="0,0,18,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Background="Silver">
-                            <RadioButton
-                                x:Name="cbOutput_CSharp_8_Arg1"
-                                Margin="5,5,0,0"
-                                Content="Windows默认(反斜杠)"
-                                GroupName="tab_CSharp_8_args" />
-                            <RadioButton
-                                x:Name="cbOutput_CSharp_8_Arg2"
-                                Margin="5,5,0,0"
-                                Content="Windows编程(双反斜杠)"
-                                GroupName="tab_CSharp_8_args" />
-                            <RadioButton
-                                x:Name="cbOutput_CSharp_8_Arg3"
-                                Margin="5,5,0,0"
-                                Content="Linux(斜杠)"
-                                GroupName="tab_CSharp_8_args"
-                                IsChecked="True" />
-                        </StackPanel>
+                            <StackPanel>
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_8_Arg1"
+                                    Margin="5,5,0,0"
+                                    Content="Windows默认(反斜杠)"
+                                    GroupName="tab_CSharp_8_args" />
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_8_Arg2"
+                                    Margin="5,5,0,0"
+                                    Content="Windows编程(双反斜杠)"
+                                    GroupName="tab_CSharp_8_args" />
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_8_Arg3"
+                                    Margin="5,5,0,0"
+                                    Content="Linux(斜杠)"
+                                    GroupName="tab_CSharp_8_args"
+                                    IsChecked="True" />
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </TabItem>
 
@@ -463,14 +464,13 @@
                             IsReadOnly="True"
                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
                             ScrollViewer.VerticalScrollBarVisibility="Auto" />
-
-                        <StackPanel
+                        <Grid
                             Width="150"
-                            Height="90"
                             Margin="0,0,18,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Background="Silver">
+                            <StackPanel>
                             <TextBox
                                 x:Name="txtOutput_CSharp_9_Arg1"
                                 AcceptsTab="True"
@@ -556,7 +556,7 @@
                             </Grid>
 
                         </StackPanel>
-
+                        </Grid>
                         <TextBlock
                             x:Name="tab_CSharp_9_txtOutputInfo"
                             Grid.Row="1"

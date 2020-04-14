@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Extensions;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -50,6 +52,9 @@ namespace Client
             txtOutput_CSharp_5.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_5_Arg.FontFamily = fontFamily_Fira_Code;
             txtOutput_CSharp_6.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_6_Arg1.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_6_Arg2.FontFamily = fontFamily_Fira_Code;
             txtOutput_CSharp_7.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_7_Arg1.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_7_Arg2.FontFamily = fontFamily_Fira_Code;
+            txtOutput_CSharp_8.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_8_Arg1.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_8_Arg2.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_8_Arg3.FontFamily = fontFamily_Fira_Code;
+            txtOutput_CSharp_9.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_9_Arg1.FontFamily = fontFamily_Fira_Code; txtOutput_CSharp_9_Arg2.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_9_Arg3.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_9_Arg4.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_9_Arg4_0.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_9_Arg4_1.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_9_Arg4_10.FontFamily = fontFamily_Fira_Code; cbOutput_CSharp_9_Arg4_11.FontFamily = fontFamily_Fira_Code;
+
             #endregion
         }
 
@@ -63,6 +68,7 @@ namespace Client
             this.txtOutput_CSharp_6_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_CSharp_6_Arg2.TextChanged += txtInput_TextChanged;
             this.txtOutput_CSharp_7_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_CSharp_7_Arg2.TextChanged += txtInput_TextChanged;
             this.cbOutput_CSharp_8_Arg1.Checked += radioButton_Click; this.cbOutput_CSharp_8_Arg2.Checked += radioButton_Click; this.cbOutput_CSharp_8_Arg3.Checked += radioButton_Click;
+            this.txtOutput_CSharp_9_Arg1.TextChanged += txtInput_TextChanged; this.txtOutput_CSharp_9_Arg2.TextChanged += txtInput_TextChanged; cbOutput_CSharp_9_Arg3.Click += checkBox_Click; cbOutput_CSharp_9_Arg4.Click += checkBox_Click; cbOutput_CSharp_9_Arg4_0.Checked += checkBox_Click; cbOutput_CSharp_9_Arg4_1.Checked += checkBox_Click; cbOutput_CSharp_9_Arg4_10.Checked += checkBox_Click; cbOutput_CSharp_9_Arg4_11.Checked += checkBox_Click;
 
             // CheckBox
             this.cbTabNewLine.Click += checkBox_Click;
@@ -95,6 +101,7 @@ namespace Client
             tab_CSharp_6.MouseDoubleClick += tabX_MouseDoubleClick;
             tab_CSharp_7.MouseDoubleClick += tabX_MouseDoubleClick;
             tab_CSharp_8.MouseDoubleClick += tabX_MouseDoubleClick;
+            tab_CSharp_9.MouseDoubleClick += tabX_MouseDoubleClick;
         }
 
         private void tabX_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -166,6 +173,7 @@ namespace Client
                 this.txtOutput_CSharp_6.Text = string.Empty;
                 this.txtOutput_CSharp_7.Text = string.Empty;
                 this.txtOutput_CSharp_8.Text = string.Empty;
+                this.txtOutput_CSharp_9.Text = string.Empty;
                 return;
             }
 
@@ -240,8 +248,11 @@ namespace Client
             this.txtOutput_CSharp_5.Text = CSharp_SqlParameter(list);
             this.txtOutput_CSharp_6.Text = CSharp_NewModelList(list);
             this.txtOutput_CSharp_7.Text = CSharp_NewModelListHowe(list);
-            this.txtOutput_CSharp_8.Text = CSharp_ABC(list);
+            this.txtOutput_CSharp_8.Text = CSharp_FilePath(list);
+            this.txtOutput_CSharp_9.Text = CSharp_Json2CSV(list);
         }
+
+
 
         private string calc(List<string> l)
         {
@@ -571,7 +582,7 @@ namespace Client
                     else
                     {
                         sb.Append($"{propNameList[columnIndex]} = \"{valuesList[columnIndex]}\"");
-                    }                    
+                    }
 
                     if (columnIndex + 1 < propNameList.Count)
                     {
@@ -690,17 +701,17 @@ namespace Client
                 {
                     sb.AppendLine(" });");
                 }
-                else 
+                else
                 {
                     sb.Append(" });");
                 }
-                
+
             }
 
             return sb.ToString();
         }
 
-        private string CSharp_ABC(List<string> l)
+        private string CSharp_FilePath(List<string> l)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -713,8 +724,8 @@ namespace Client
             {
                 combineSymbol = @"\\";
             }
-            else if(cbOutput_CSharp_8_Arg3.IsChecked.HasValue == true && cbOutput_CSharp_8_Arg3.IsChecked.Value == true)
-            { 
+            else if (cbOutput_CSharp_8_Arg3.IsChecked.HasValue == true && cbOutput_CSharp_8_Arg3.IsChecked.Value == true)
+            {
                 combineSymbol = @"/";
             }
 
@@ -728,5 +739,123 @@ namespace Client
             return r.Substring(0, r.Length - 2); // 去掉最后的两个符号
         }
 
+        private string CSharp_Json2CSV(List<string> l)
+        {
+            string symbol = string.Empty;
+            if (this.txtOutput_CSharp_9_Arg1.Text.IsNullOrWhiteSpace() == false)
+            {
+                symbol = this.txtOutput_CSharp_9_Arg1.Text;
+            }
+
+            if (symbol.IsNullOrWhiteSpace() == true)
+            {
+                tab_CSharp_9_txtOutputInfo.Text = string.Empty;
+                return "未输入CSV文件分割符号";
+            }
+
+            if (this.txtOutput_CSharp_9_Arg2.Text.IsNullOrWhiteSpace() == true)
+            {
+                tab_CSharp_9_txtOutputInfo.Text = string.Empty;
+                return "未输入提取属性";
+            }
+
+            List<string> propList = // 提取属性集合
+            this.txtOutput_CSharp_9_Arg2.Text
+                .Split(',', '|', ';')
+                .Select(i => i.Trim())
+                .Where(i => i.IsNullOrWhiteSpace() == false)
+                .ToList();
+
+            StringBuilder sb = new StringBuilder();
+
+            List<JObject> dl = new List<JObject>();
+
+            string jsonStr = string.Empty;
+            List<char> charList = new List<char>() { ']', '}' }; // 若以 ] } 结尾, 则进行JSON字符串的解释, 否则继续累加
+            foreach (var item in l)
+            {
+                jsonStr = jsonStr + item; // 累加成为完整的Json字符串
+
+                if (charList.Contains(jsonStr[jsonStr.Length - 1])) // 若以 ] } 结尾, 则进行JSON字符串的解释
+                {
+                    if (jsonStr[0] == '[')
+                    {
+                        dl.AddRange(Util.JsonUtils.DeserializeObject<List<JObject>>(jsonStr));
+                    }
+                    else
+                    {
+                        dl.Add(Util.JsonUtils.DeserializeObject<JObject>(jsonStr));
+                    }
+
+                    jsonStr = string.Empty;
+                }
+            }
+
+            foreach (JObject item in dl)
+            {
+                string toAddSB = string.Empty;
+                foreach (string key in propList)
+                {
+                    if (item.TryGetValue(propertyName: key, StringComparison.CurrentCultureIgnoreCase, out JToken value))
+                    {
+                        if (toAddSB.IsNullOrEmpty() == true)
+                        {
+                            toAddSB = value.ToString();
+                        }
+                        else
+                        {
+                            toAddSB = $"{toAddSB}{symbol}{value.ToString()}";
+                        }
+                    }
+                }
+                sb.AppendLine(toAddSB);
+            }
+
+            string r = sb.ToString();
+
+            if (r.IsNullOrWhiteSpace() == true)
+            {
+                return r;
+            }
+
+            var query = sb.ToString()
+                      .Split(new string[] { "\r\n" }, StringSplitOptions.None)
+                      .AsQueryable<string>()
+                      ;
+
+            if (cbOutput_CSharp_9_Arg3.IsChecked == true) // 去重复
+            {
+                query = query.Distinct();
+            }
+
+            tab_CSharp_9_txtOutputInfo.Text = $"Json2CSV 结果 - 共 {query.Count() - 1} 项"; // - 1 原因是 最后有一个 \r\n 多计算了
+
+            if (cbOutput_CSharp_9_Arg4.IsChecked.Value) // 原顺序
+            {
+                // Do nothing
+            }
+            else if (cbOutput_CSharp_9_Arg4_10.IsChecked.Value) // Windows 正序
+            {
+                var stringComparer = new StrLogicalComparer();
+                query = query.OrderBy(keySelector: (i => i), comparer: stringComparer);
+            }
+            else if (cbOutput_CSharp_9_Arg4_11.IsChecked.Value) // Windows 逆序
+            {
+                var stringComparer = new StrLogicalComparer();
+                query = query.OrderByDescending(keySelector: (i => i), comparer: stringComparer);
+            }
+            else if (cbOutput_CSharp_9_Arg4_0.IsChecked.Value) // C# 正序
+            {
+                query = query.OrderBy(i => i);
+            }
+            else if (cbOutput_CSharp_9_Arg4_1.IsChecked.Value) // C# 逆序
+            {
+                query = query.OrderByDescending(i => i);
+            }
+
+            r = query.CombineString("\r\n");
+
+            return r; // 去掉最后的两个符号            
+        }
     }
 }

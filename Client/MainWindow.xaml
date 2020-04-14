@@ -446,11 +446,130 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+
+                <TabItem
+                    Name="tab_CSharp_9"
+                    Header="(C#)Json2CSV">
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBox
+                            x:Name="txtOutput_CSharp_9"
+                            AcceptsReturn="True"
+                            IsReadOnly="True"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+                        <StackPanel
+                            Width="150"
+                            Height="90"
+                            Margin="0,0,18,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="Silver">
+                            <TextBox
+                                x:Name="txtOutput_CSharp_9_Arg1"
+                                AcceptsTab="True"
+                                Tag="分隔符"
+                                Text="," />
+
+                            <TextBox x:Name="txtOutput_CSharp_9_Arg2">
+                                <TextBox.Resources>
+                                    <VisualBrush
+                                        x:Key="txtOutput_CSharp_7_Placeholder"
+                                        AlignmentX="Left"
+                                        Stretch="None"
+                                        TileMode="None">
+                                        <VisualBrush.Visual>
+                                            <TextBlock
+                                                FontStyle="Italic"
+                                                Foreground="Red"
+                                                Text="提取属性(用逗号分隔)" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </TextBox.Resources>
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="">
+                                                <Setter Property="Background" Value="{StaticResource txtOutput_CSharp_7_Placeholder}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                            <CheckBox
+                                x:Name="cbOutput_CSharp_9_Arg3"
+                                VerticalContentAlignment="Center"
+                                Content="去重复" />
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_9_Arg4"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Content="原顺序"
+                                    GroupName="cbOutput_CSharp_9_Arg4"
+                                    IsChecked="True" />
+
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_9_Arg4_0"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Content="C#正序"
+                                    GroupName="cbOutput_CSharp_9_Arg4" />
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_9_Arg4_1"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Content="C#逆序"
+                                    GroupName="cbOutput_CSharp_9_Arg4" />
+
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_9_Arg4_10"
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Content="Win正序"
+                                    GroupName="cbOutput_CSharp_9_Arg4" />
+                                <RadioButton
+                                    x:Name="cbOutput_CSharp_9_Arg4_11"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Content="Win逆序"
+                                    GroupName="cbOutput_CSharp_9_Arg4" />
+                            </Grid>
+
+                        </StackPanel>
+
+                        <TextBlock
+                            x:Name="tab_CSharp_9_txtOutputInfo"
+                            Grid.Row="1"
+                            Margin="5,0,0,0" />
+                    </Grid>
+                </TabItem>
+
             </TabControl>
 
             <TextBlock
                 x:Name="txtOutputInfo"
-                Grid.Row="1" />
+                Grid.Row="1"
+                Margin="5,0,0,0" />
         </Grid>
     </Grid>
 </Window>

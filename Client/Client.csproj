@@ -52,7 +52,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="Util.HowesDOMO, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Util.HowesDOMO.1.0.7-alpha1\lib\net40\Util.HowesDOMO.dll</HintPath>
+      <HintPath>..\packages\Util.HowesDOMO.1.0.7\lib\net40\Util.HowesDOMO.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />

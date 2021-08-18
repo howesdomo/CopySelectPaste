@@ -573,7 +573,8 @@ namespace Client
 
                     if (item.Equals("null", StringComparison.CurrentCultureIgnoreCase))
                     {
-                        sb.Append($"{propNameList[columnIndex]} = {valuesList[columnIndex]}");
+                        // sb.Append($"{propNameList[columnIndex]} = {valuesList[columnIndex]}");
+                        sb.Append($"{propNameList[columnIndex]} = null");
                     }
                     else if (ignoreIndexList.Any(j => j == columnIndex)) // 忽略用户手输的
                     {

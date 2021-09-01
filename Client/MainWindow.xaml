@@ -97,6 +97,11 @@
                     VerticalAlignment="Center"
                     Content="除重复" />
 
+                <Button
+                    x:Name="btnClearContent"
+                    Margin="5,5,5,5"
+                    Content="清空内容" />
+
             </StackPanel>
 
             <TextBox
@@ -195,8 +200,8 @@
                                             TileMode="None">
                                             <VisualBrush.Visual>
                                                 <TextBlock
-                                                    FontStyle="Italic"
                                                     Foreground="Red"
+                                                    FontStyle="Italic"
                                                     Text="不加引号Index(用逗号分隔)" />
                                             </VisualBrush.Visual>
                                         </VisualBrush>
@@ -330,8 +335,8 @@
                                             TileMode="None">
                                             <VisualBrush.Visual>
                                                 <TextBlock
-                                                    FontStyle="Italic"
                                                     Foreground="Red"
+                                                    FontStyle="Italic"
                                                     Text="不加引号Index(用逗号分隔)" />
                                             </VisualBrush.Visual>
                                         </VisualBrush>
@@ -385,8 +390,8 @@
                                             TileMode="None">
                                             <VisualBrush.Visual>
                                                 <TextBlock
-                                                    FontStyle="Italic"
                                                     Foreground="Red"
+                                                    FontStyle="Italic"
                                                     Text="不加引号Index(用逗号分隔)" />
                                             </VisualBrush.Visual>
                                         </VisualBrush>
@@ -486,8 +491,8 @@
                                             TileMode="None">
                                             <VisualBrush.Visual>
                                                 <TextBlock
-                                                    FontStyle="Italic"
                                                     Foreground="Red"
+                                                    FontStyle="Italic"
                                                     Text="提取属性(用逗号分隔)" />
                                             </VisualBrush.Visual>
                                         </VisualBrush>

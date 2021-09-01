@@ -60,6 +60,8 @@ namespace Client
 
         private void initEvent()
         {
+            this.btnClearContent.Click += (s,e) => { this.txtInput.Text = string.Empty; };
+
             // 输入参数
             this.txtInput.TextChanged += txtInput_TextChanged;
             this.txtOutput_CSharp_1_Arg.TextChanged += txtInput_TextChanged;
